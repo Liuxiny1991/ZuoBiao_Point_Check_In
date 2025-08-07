@@ -160,8 +160,8 @@ def main():
     msg = ""
     global cookie_zuobiao
     cookie_zuobiao = get_env()
-
-    print("✅ 检测到共", len(cookie_zuobiao.get("ZUOBIAO")), "个坐标账号\n")
+    print(cookie_zuobiao)
+    #print("✅ 检测到共", len(cookie_zuobiao["ZUOBIAO"]), "个坐标账号\n")
 
     i = 0
     for i in range(len(cookie_zuobiao.get("ZUOBIAO", []))):
