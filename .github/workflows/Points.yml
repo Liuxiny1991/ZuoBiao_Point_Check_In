@@ -1,0 +1,33 @@
+name: 积分获取
+on:
+  schedule:
+    - cron: '0 9 * * *'
+  watch:
+    types: started
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout codes
+        uses: actions/checkout@v4
+      - name: Update system and install zsh
+        run: |
+          sudo -E apt-get -qq update
+          sudo -E apt-get install zsh -y
+          
+      - name: 初始化Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.8
+      - name: 开始
+        env:
+          ZUOBIAO: ${{ secrets.CONFIG }}
+          PageNum: 1
+
+        run: |
+          pip install --upgrade pip
+          pip3 install requests
+          pip install DingtalkChatbot
+          python3 Point.py
