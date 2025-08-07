@@ -22,22 +22,15 @@ def send(title, message):
 
 # 获取环境变量 
 def get_env(): 
-    cookie_list = { 
-        "ZUOBIAO": [
-            {
-                "account": "04163",
-                "password": "+3om84UTaJAJXb1X4E4v0A=="
-            }
-        ]}
-   
     #判断 COOKIE_ZUOBIAO否存在于环境变量 
-    if "COOKIE_ZUOBIAO" in os.environ: 
+    if "ZUOBIAO" in os.environ: 
         # 读取系统变量以 \n 或 && 分割变量 
-        cookie_list = os.environ.get('COOKIE_ZUOBIAO')
+        cookie_list = os.environ.get('ZUOBIAO')
     else: 
         # 标准日志输出 
-        print('❌未添加COOKIE_ZUOBIAO变量') 
-        send('坐标自动刷积分', '❌未添加COOKIE_ZUOBIAO量') 
+        print('❌未添加ZUOBIAO变量') 
+        send('坐标自动刷积分', '❌未添加ZUOBIAO变量') 
+
         # 脚本退出 
         sys.exit(0) 
 
@@ -113,7 +106,7 @@ class ZuoBiao:
         :return: 返回所有文章
         '''
         param = {
-            "pageNum": 1,
+            "pageNum": self.pageNum,
             "pageSize": 50,
             "secondarySort": 'createdTime',
         }
