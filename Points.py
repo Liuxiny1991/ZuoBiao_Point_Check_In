@@ -160,13 +160,14 @@ def main():
     msg = ""
     global cookie_zuobiao
     cookie_zuobiao = get_env()
+    datas = json.loads(cookie_zuobiao)
     print(cookie_zuobiao)
-    #print("✅ 检测到共", len(cookie_zuobiao["ZUOBIAO"]), "个坐标账号\n")
+    print("✅ 检测到共", len(cookie_zuobiao["ZUOBIAO"]), "个坐标账号\n")
 
     i = 0
-    for i in range(len(cookie_zuobiao.get("ZUOBIAO", []))):
+    for i in range(len(datas.get("ZUOBIAO", []))):
         #print(i)
-        _check_item = cookie_zuobiao.get("ZUOBIAO", [])[i]
+        _check_item = datas.get("ZUOBIAO", [])[i]
         #print(_check_item)
          # 开始任务
         log = f"🙍🏻‍♂️ 第{i + 1}个账号"
