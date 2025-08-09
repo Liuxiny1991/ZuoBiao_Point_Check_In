@@ -170,15 +170,15 @@ class ZuoBiao:
                     self.headers['Cookie'] = my_cookie
                     self.get_document_id() #开始获取帖子
                     self.get_todo_id() #开始获取帖子
-                    return None
+                    return f"账号 [{self.param.get('account')}]"
 
                 else:
                     print(f"账号 [{self.param.get('account')}] 的Cookie解析失败，未找到SESSION或zb_sid。")
                     print(f"原始Set-Cookie头: {set_cookie_headers}")
-                    return None
+                    return f"账号 [{self.param.get('account')}]"
         except requests.exceptions.RequestException as e:
             print(f"账号 [{self.param.get('account')}] 刷新Cookie时出错: {e}")
-        return None
+        return f"账号 [{self.param.get('account')}]"
 
 def main():
     '''

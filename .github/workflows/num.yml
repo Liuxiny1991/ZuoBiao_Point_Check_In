@@ -16,12 +16,12 @@ jobs:
           token: ${{ secrets.PAT }} #此处PAT需要申请，教程详见：https://www.jianshu.com/p/bb82b3ad1d11,需要repo和workflow权限
       - name: 累加PageNum
         run: |
-          old=$(grep -E "^[[:space:]]*PageNum: [0-9]+" .github/workflows/Points.yml | awk '{print $2}')
+          old=$(grep -E "^[[:space:]]*PageNum: [0-9]+" .github/workflows/GET_POINT.yml | awk '{print $2}')
           old=${old:-0}
           new=$((old+1))
-          sed -i -E "s/^([[:space:]]*PageNum: )[0-9]+/\1$new/" .github/workflows/Points.yml
+          sed -i -E "s/^([[:space:]]*PageNum: )[0-9]+/\1$new/" .github/workflows/GET_POINT.yml
           git config user.name github-actions
           git config user.email github-actions@github.com
-          git add .github/workflows/Points.yml
+          git add .github/workflows/GET_POINT.yml
           git commit -m "累加PageNum为$new"
           git push origin HEAD:master
