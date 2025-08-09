@@ -128,7 +128,7 @@ class ZuoBiao:
         response = requests.get(url=GET_TODO_URI, headers=self.headers).json()
 
         print(response)
-        if response.get('code') == 1000:
+        if response.get('code') == '1000':
             self.todoList = response['data']
             self.set_todo_record()
             return True, self.todoList
