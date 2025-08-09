@@ -126,13 +126,10 @@ class ZuoBiao:
         '''
         #请求代办连接
         response = requests.get(url=GET_TODO_URI, headers=self.headers).json()
-
-        print(response.get('code'))
         if response.get('code') == '1000':
             self.todoList = response['data']
             self.set_todo_record()
             return True, self.todoList
-
         else:
             return False, response["message"]
     def set_todo_record(self):
@@ -170,11 +167,11 @@ class ZuoBiao:
                     
                     my_cookie = f"SESSION={session_val}; zb_sid={zbsid_val}"
                     print(f'账号 [{self.param.get("account")}] 的Cookie刷新成功！')
-                    print(f'新的Cookie为: {my_cookie}')
                     self.headers['Cookie'] = my_cookie
                     self.get_document_id() #开始获取帖子
                     self.get_todo_id() #开始获取帖子
-                    return my_cookie
+                    return {self.param.get('account')}
+
                 else:
                     print(f"账号 [{self.param.get('account')}] 的Cookie解析失败，未找到SESSION或zb_sid。")
                     print(f"原始Set-Cookie头: {set_cookie_headers}")
@@ -206,10 +203,8 @@ def main():
         log = ZuoBiao(_check_item).do_login()
         msg += log + "\n"
         i += 1
-    print(msg)
-
     try:
-        send('坐标自动读帖子', msg)
+        send('开始', msg)
     except Exception as err:
         print('%s\n❌ 错误，请查看运行日志！' % err)
 
