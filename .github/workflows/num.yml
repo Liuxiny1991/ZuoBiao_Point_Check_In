@@ -25,6 +25,8 @@ jobs:
           echo "new page num: $new"
           cat .github/workflows/Points.yml
           #sed -i "s/^[[:space:]]*PageNum: .*/PageNum: $new/" .github/workflows/Points.yml
+          #sed -i -E "s/^([[:space:]]*PageNum: )[0-9]+/\1$new/" .github/workflows/Points.yml
+          #sed -i 's/\(^[[:space:]]*PageNum: \)[0-9]*/\1$new/' .github/workflows/Points.yml
           sed -i -E "s/^([[:space:]]*PageNum: )[0-9]+/\1$new/" .github/workflows/Points.yml
           echo "after change"
 
