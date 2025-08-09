@@ -95,7 +95,7 @@ class ZuoBiao:
               'type': '0'
             }
             response = requests.post(url=DOCUMENT_RECORD_URI, headers=self.headers, json=param).json()
-            if response.get('code') == 1000:
+            if response.get('code') == '1000':
                 send('✅记录成功', f'文章标题：{document["title"]}')
             else:
                 send('❌记录失败', f'文章标题：{document["title"]}')
@@ -127,7 +127,7 @@ class ZuoBiao:
         #请求代办连接
         response = requests.get(url=GET_TODO_URI, headers=self.headers).json()
 
-        print(response)
+        print(response.get('code'))
         if response.get('code') == '1000':
             self.todoList = response['data']
             self.set_todo_record()
@@ -143,7 +143,7 @@ class ZuoBiao:
         for todoRecord in self.todoList:
             self.todo['id'] = todoRecord['id']
             response = requests.post(url=EXECUT_TODO_URI, headers=self.headers, json=self.todo).json()
-            if response.get('code') == 1000:
+            if response.get('code') == '1000':
                 send('✅代办任务成功', f'任务名称：{todoRecord["title"]}')
             else:
                 send('❌代办任务失败', f'任务名称：{todoRecord["title"]}')
