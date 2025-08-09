@@ -99,7 +99,7 @@ class ZuoBiao:
                 send('✅记录成功', f'文章标题：{document["title"]}')
             else:
                 send('❌记录失败', f'文章标题：{document["title"]}')
-            time.sleep(60) # 休眠60秒
+            time.sleep(6) # 休眠60秒
 
     def get_document_id(self):
         '''
@@ -108,7 +108,7 @@ class ZuoBiao:
         '''
         param = {
             "pageNum": self.pageNum,
-            "pageSize": 50,
+            "pageSize": 2,
             "secondarySort": 'createdTime',
         }
         #请求文章连接
