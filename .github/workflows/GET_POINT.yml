@@ -1,4 +1,4 @@
-name: ZUOBIAO_POINTS
+name: ZUOBIAO
 
 
 on:
@@ -100,7 +100,7 @@ jobs:
         uses: Mattraks/delete-workflow-runs@main
         if: always()
         with:
-          token: ${{ github.token }}
+          token: ${{ secrets.PAT }}
           repository: ${{ github.repository }}
           retain_days: 0
           keep_minimum_runs: 60

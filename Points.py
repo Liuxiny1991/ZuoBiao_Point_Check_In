@@ -170,7 +170,7 @@ class ZuoBiao:
                     self.headers['Cookie'] = my_cookie
                     self.get_document_id() #开始获取帖子
                     self.get_todo_id() #开始获取帖子
-                    return {self.param.get('account')}
+                    return None
 
                 else:
                     print(f"账号 [{self.param.get('account')}] 的Cookie解析失败，未找到SESSION或zb_sid。")
@@ -197,7 +197,7 @@ def main():
         _check_item = datas.get("ZUOBIAO", [])[i]
         #print(_check_item)
          # 开始任务
-        log = f"🙍🏻‍♂️ 第{i + 1}个账号"
+        log = f"🙍🏻‍♂️ 第{i + 1}个账号"+_check_item['account']
         msg += log
         # 登录
         log = ZuoBiao(_check_item).do_login()

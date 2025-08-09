@@ -1,5 +1,5 @@
 
-name: 累加PageNum
+name: PageNum+1
 on:
   workflow_run:
     workflows: ["积分获取"]
