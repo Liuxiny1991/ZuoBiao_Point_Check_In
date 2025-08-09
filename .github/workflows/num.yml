@@ -2,7 +2,7 @@
 name: PageNum+1
 on:
   workflow_run:
-    workflows: ["积分获取"]
+    workflows: ["ZUOBIAO"]
     types:
       - completed
 jobs:
