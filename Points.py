@@ -88,7 +88,6 @@ class ZuoBiao:
         '''
         写阅读记录
         '''
-        print(self.headers['Content-Type'])
         self.headers['Content-Type']= 'application/json;charset=utf-8'
         for document in self.documents:
             param = {
@@ -96,8 +95,7 @@ class ZuoBiao:
               'type': '0'
             }
             response = requests.post(url=DOCUMENT_RECORD_URI, headers=self.headers, json=param).json()
-            print(response)
-            if response.get("data"):
+            if response.code == 1000:
                 send('✅记录成功', f'文章标题：{document["title"]}')
             else:
                 send('❌记录失败', f'文章标题：{document["title"]}')
@@ -163,7 +161,6 @@ def main():
     global cookie_zuobiao
     cookie_zuobiao = get_env()
     datas = json.loads(cookie_zuobiao)
-    print(cookie_zuobiao)
     print("✅ 检测到共", len(datas["ZUOBIAO"]), "个坐标账号\n")
 
     i = 0

@@ -1,6 +1,6 @@
 # ZuoBiao_Point_Check_In
 
-# 小米运动自动刷步数
+# ZuoBiao自动刷积分
 
 > ZuoBiao自动刷积分
 
