@@ -16,9 +16,12 @@ jobs:
           token: ${{ secrets.PAT }} #此处PAT需要申请，教程详见：https://www.jianshu.com/p/bb82b3ad1d11,需要repo和workflow权限
       - name: random cron
         run: |
+          
           old=$(grep "^PageNum:" .github/workflows/Points.yml | awk '{print $2}')
           old=${old:-0}
           new=$((old+1))
+          echo "old page num: $old"
+          echo "new page num: $new"
           sed -i "s/^PageNum: .*/PageNum: $new/" .github/workflows/Points.yml
           git config user.name github-actions
           git config user.email github-actions@github.com
