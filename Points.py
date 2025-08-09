@@ -95,7 +95,7 @@ class ZuoBiao:
               'type': '0'
             }
             response = requests.post(url=DOCUMENT_RECORD_URI, headers=self.headers, json=param).json()
-            if response.code == 1000:
+            if response['code'] == 1000:
                 send('✅记录成功', f'文章标题：{document["title"]}')
             else:
                 send('❌记录失败', f'文章标题：{document["title"]}')
