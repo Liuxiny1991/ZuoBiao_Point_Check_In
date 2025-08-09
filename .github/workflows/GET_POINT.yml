@@ -7,7 +7,7 @@ on:
   workflow_dispatch:      # 允许手动触发
 
 jobs:
-  check-if-already-signed:
+  查询是否已运行:
     runs-on: ubuntu-latest
     outputs:
       skip: ${{ steps.check.outputs.skip }}
@@ -15,14 +15,14 @@ jobs:
       - name: 检出代码
         uses: actions/checkout@v3
 
-      - name: 恢复签到成功记录缓存
+      - name: 恢复上次运行记录缓存
         id: cache-success-restore
         uses: actions/cache@v4
         with:
           path: .last_success_date
           key: last-success-marker
 
-      - name: 判断是否已签到
+      - name: 判断是否已运行
         id: check
         run: |
           current_date=$(TZ='Asia/Shanghai' date '+%Y-%m-%d')
@@ -30,7 +30,7 @@ jobs:
 
           if [ -f .last_success_date ]; then
             last_date=$(cat .last_success_date)
-            echo "上次签到日期: $last_date"
+            echo "上次运行日期: $last_date"
             if [ "$last_date" = "$current_date" ]; then
               echo "今天已成功运行，跳过执行。"
               echo "skip=false" >> "$GITHUB_OUTPUT"
@@ -41,9 +41,9 @@ jobs:
           echo "今天尚未运行，继续执行。"
           echo "skip=true" >> "$GITHUB_OUTPUT"
 
-  sign-in:
-    needs: check-if-already-signed
-    if: needs.check-if-already-signed.outputs.skip == 'true'
+  开始运行:
+    needs: 查询是否已运行
+    if: 查询是否已运行.outputs.skip == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: 检出代码
@@ -67,7 +67,7 @@ jobs:
       - name: 执行签到脚本
         env:
           ZUOBIAO: ${{ secrets.CONFIG }}
-          PageNum: 4
+          PageNum: 3
         run: python Points.py
 
       - name: 标记今天签到成功
