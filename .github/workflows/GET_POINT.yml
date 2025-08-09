@@ -1,8 +1,11 @@
-name: Quark签到
+name: ZUOBIAO_POINTS
+
 
 on:
   schedule:
     - cron: '0 1 * * *'   # 北京时间 09:00 (UTC+8 -> UTC+1)
+  watch:
+    types: started
   workflow_dispatch:      # 允许手动触发
 
 jobs:
