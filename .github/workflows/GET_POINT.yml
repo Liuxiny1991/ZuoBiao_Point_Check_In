@@ -7,7 +7,7 @@ on:
   workflow_dispatch:      # 允许手动触发
 
 jobs:
-  查询是否已运行:
+  check_if_run:
     runs-on: ubuntu-latest
     outputs:
       skip: ${{ steps.check.outputs.skip }}
@@ -42,8 +42,8 @@ jobs:
           echo "skip=true" >> "$GITHUB_OUTPUT"
 
   开始运行:
-    needs: 查询是否已运行
-    if: 查询是否已运行.outputs.skip == 'true'
+    needs: check_if_run
+    if: check_if_run.outputs.skip == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: 检出代码
