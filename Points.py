@@ -16,7 +16,8 @@ LOGIN_URI = f'{HOST}/teamworkapi/user/login'
 GET_DOCUMENT_ID_URI = f'{HOST}/teamworkapi/api/ajax/inside/knowledge/getList'
 DOCUMENT_RECORD_URI = f'{HOST}/process/dataDocument/documentRecord'
 GET_INFO_URI = f'{HOST}/process/score/info'
-
+GET_TODO_URI = f'{HOST}/process/ho-schedule/dealScheduleList?type=1'
+EXECUT_TODO_URI = f'{HOST}/process/ho-schedule/execute'
 # --- HTTP 请求头 ---
 
 # 替代 notify 功能
@@ -52,6 +53,7 @@ class ZuoBiao:
         '''
         self.param = user_data
         self.pageNum = os.environ.get('PageNum')
+        self.todo = { "id": "", "status": 2, "description": "", "fj": "[]" }
         self.headers = {
             'Accept': 'application/json, text/plain, */*',
             'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
@@ -69,8 +71,6 @@ class ZuoBiao:
         }
     def getInfo_uri(self):
         return requests.get(GET_INFO_URI, self.headers).json()['data']['totalScore']
-
-
     def convert_bytes(self, b):
         '''
         将字节转换为 MB GB TB
@@ -119,6 +119,34 @@ class ZuoBiao:
             return True, self.documents
         else:
             return False, response["message"]
+    def get_todo_id(self):
+        '''
+        获取代办任务
+        :return: 返回所有代办任务id
+        '''
+        #请求代办连接
+        response = requests.get(url=GET_TODO_URI, headers=self.headers).json()
+        if response['code'] == 1000:
+            self.todoList = response['data']
+            self.set_todo_record()
+            return True, self.todoList
+
+        else:
+            return False, response["message"]
+    def set_todo_record(self):
+        '''
+        写阅读记录
+        '''
+        self.headers['Content-Type']= 'application/json'
+        for todoRecord in self.todoList:
+            self.todo['id'] = todoRecord['id']
+            response = requests.post(url=EXECUT_TODO_URI, headers=self.headers, json=self.todo).json()
+            if response['code'] == 1000:
+                send('✅代办任务成功', f'任务名称：{todoRecord["title"]}')
+            else:
+                send('❌代办任务失败', f'任务名称：{todoRecord["title"]}')
+            time.sleep(60) # 休眠60秒
+
     def do_login(self):
         """通过登录来刷新会话cookie"""
         print(f"正在为账号 [{self.param.get('account')}] 尝试登录并刷新Cookie...")
@@ -143,6 +171,7 @@ class ZuoBiao:
                     print(f'新的Cookie为: {my_cookie}')
                     self.headers['Cookie'] = my_cookie
                     self.get_document_id() #开始获取帖子
+                    self.get_todo_id() #开始获取帖子
                     return my_cookie
                 else:
                     print(f"账号 [{self.param.get('account')}] 的Cookie解析失败，未找到SESSION或zb_sid。")
