@@ -23,5 +23,5 @@ jobs:
           git config user.name github-actions
           git config user.email github-actions@github.com
           git add .github/workflows/Points.yml
-          git commit -m "random cron."
+          git commit -m "累加PageNum为$new"
           git push origin HEAD:master
