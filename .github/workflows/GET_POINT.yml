@@ -43,7 +43,7 @@ jobs:
 
   setup:
     needs: check_if_run
-    if: check_if_run.outputs.skip == 'true'
+    if: needs.check_if_run.outputs.skip == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: 检出代码
