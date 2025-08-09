@@ -17,7 +17,7 @@ jobs:
       - name: random cron
         run: |
           
-          old=$(grep "s/^[[:space:]]*PageNum: [0-9]+/" .github/workflows/Points.yml | awk '{print $2}')
+          old=$(grep -E "^[[:space:]]*PageNum: [0-9]+" .github/workflows/Points.yml | awk '{print $2}')
 
           old=${old:-0}
           new=$((old+1))
