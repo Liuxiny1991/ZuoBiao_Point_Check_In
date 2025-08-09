@@ -24,7 +24,7 @@ jobs:
       - name: 开始
         env:
           ZUOBIAO: ${{ secrets.CONFIG }}
-          PageNum: 1
+PageNum: 1
 
         run: |
           pip install --upgrade pip
