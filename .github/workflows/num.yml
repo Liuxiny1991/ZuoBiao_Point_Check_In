@@ -20,13 +20,8 @@ jobs:
           old=$(grep "^PageNum:" .github/workflows/Points.yml | awk '{print $2}')
           old=${old:-0}
           new=$((old+1))
-          echo "old page num: $old"
-          echo "new page num: $new"
-          echo "Before change:"
-          cat .github/workflows/Points.yml
-          sed -i "s/^[[:space:]]*PageNum: .*/PageNum: $new/" .github/workflows/Points.yml
-          echo "After change:"
-          cat .github/workflows/Points.yml
+          #sed -i "s/^[[:space:]]*PageNum: .*/PageNum: $new/" .github/workflows/Points.yml
+          sed -i -E "s/^([[:space:]]*PageNum: )[0-9]+/\1$new/" .github/workflows/Points.yml
           git config user.name github-actions
           git config user.email github-actions@github.com
           git add .github/workflows/Points.yml
