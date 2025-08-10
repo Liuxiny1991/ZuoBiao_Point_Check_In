@@ -210,8 +210,10 @@ def main():
         log = f"🙍🏻‍♂️ 第{i + 1}个账号"+_check_item['account']
         msg += log
         # 登录
-        log = ZuoBiao(_check_item).do_login()
+        zuobaio = ZuoBiao(_check_item)
+        log = zuobaio.do_login()
         msg += log + "\n"
+        zuobaio.push_dt(msg)
         i += 1
     try:
         send('开始', msg)
