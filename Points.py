@@ -108,7 +108,7 @@ class ZuoBiao:
         '''
         param = {
             "pageNum": self.pageNum,
-            "pageSize": 2,
+            "pageSize": 50,
             "secondarySort": 'createdTime',
         }
         #请求文章连接
@@ -208,7 +208,7 @@ def main():
         _check_item = datas.get("ZUOBIAO", [])[i]
         #print(_check_item)
          # 开始任务
-        log = f"🙍🏻‍♂️ 第{i + 1}个账号"+_check_item['account']
+        log = f"完成🙍🏻‍♂️ 第{i + 1}个账号"+_check_item['account']
         msg += log
         # 登录
         zuobaio = ZuoBiao(_check_item)
