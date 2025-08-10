@@ -148,6 +148,7 @@ class ZuoBiao:
     def push_dt(self, msg):
         try:
             webhook = 'https://oapi.dingtalk.com/robot/send?access_token='+f"{self.param.get('dingtalk')}"
+            print(webhook)
 
             dingTalk = DingtalkChatbot(webhook,fail_notice=True)
             # Markdown消息@所有人
