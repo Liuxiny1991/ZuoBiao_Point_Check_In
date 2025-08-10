@@ -1,13 +1,12 @@
 
-from tokenize import String
 import requests
 import re
 import time
 import os
 import sys
 import json
-
-from datetime import datetime
+import traceback
+from dingtalkchatbot.chatbot import DingtalkChatbot
 
 
 # --- 配置信息 ---
@@ -39,6 +38,7 @@ def get_env():
         sys.exit(0) 
 
     return cookie_list 
+
 
 # 其他代码...
 
@@ -145,7 +145,17 @@ class ZuoBiao:
             else:
                 send('❌代办任务失败', f'任务名称：{todoRecord["title"]}')
             time.sleep(60) # 休眠60秒
+    def push_dt(self, msg):
+        try:
+            webhook = 'https://oapi.dingtalk.com/robot/send?access_token='+{self.param.get('dingtalk')}
 
+            dingTalk = DingtalkChatbot(webhook,fail_notice=True)
+            # Markdown消息@所有人
+            dingTalk.send_markdown(title="ZUOBIAO", text=msg,
+                is_at_all=True)
+        except Exception as e:
+            error_traceback = traceback.format_exc()
+            print(error_traceback)
     def do_login(self):
         """通过登录来刷新会话cookie"""
         print(f"正在为账号 [{self.param.get('account')}] 尝试登录并刷新Cookie...")
