@@ -1,7 +1,7 @@
 name: ZUOBIAO
 on:
   schedule:
-    - cron: '0 1 * * *'   # 北京时间 09:00 (UTC+8 -> UTC+1)
+    - cron: '0 0 * * *'   # 北京时间 08:00 (UTC+8 -> UTC+1)
   watch:
     types: started
   workflow_dispatch:      # 允许手动触发
