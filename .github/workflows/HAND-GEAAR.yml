@@ -1,0 +1,40 @@
+name: 手动标记执行成功
+on:
+  workflow_dispatch:
+
+jobs:
+  manual_mark_success:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v3
+
+      - name: 恢复上次运行记录缓存
+        id: cache-success-restore
+        uses: actions/cache@v4
+        with:
+          path: .last_success_date
+          key: last-success-marker
+
+      - name: 标记今天执行成功
+        run: |
+          date_str=$(TZ='Asia/Shanghai' date '+%Y-%m-%d')
+          echo "$date_str" > .last_success_date
+          echo "已手动标记成功运行日期: $date_str"
+
+      - name: 保存成功记录到缓存
+        uses: actions/cache@v4
+        with:
+          path: .last_success_date
+          key: last-success-marker-${{ github.run_id }}
+          restore-keys: |
+            last-success-marker
+
+      - name: 显示结果
+        run: |
+          if [ -f .last_success_date ]; then
+            last_date=$(cat .last_success_date)
+            echo "当前标记的执行成功日期为: $last_date"
+          else
+            echo "未找到成功日期记录"
+          fi
