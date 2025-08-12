@@ -14,7 +14,9 @@ jobs:
         uses: actions/cache@v4
         with:
           path: .last_success_date
-          key: last-success-marker
+          key: last-success-marker-${{ github.run_id }}
+          restore-keys: |
+            last-success-marker
 
       - name: 标记今天执行成功
         run: |
@@ -26,9 +28,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: .last_success_date
-          key: last-success-marker-${{ github.run_id }}
-          restore-keys: |
-            last-success-marker
+          key: last-success-marker
 
       - name: 显示结果
         run: |
