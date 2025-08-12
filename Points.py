@@ -212,8 +212,8 @@ def main():
         # 登录
         zuobaio = ZuoBiao(_check_item)
         log = zuobaio.do_login()
+        zuobaio.push_dt(log)
         msg += log + "\n"
-        zuobaio.push_dt(msg)
         i += 1
     try:
         send('开始', msg)
