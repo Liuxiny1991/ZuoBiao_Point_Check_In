@@ -109,6 +109,7 @@ class ZuoBiao:
         param = {
             "pageNum": self.pageNum,
             "pageSize": 50,
+            "orderBy": 'asc',
             "secondarySort": 'createdTime',
         }
         #请求文章连接
