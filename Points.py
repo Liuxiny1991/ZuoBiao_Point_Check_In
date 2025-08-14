@@ -22,7 +22,18 @@ EXECUT_TODO_URI = f'{HOST}/process/ho-schedule/execute'
 # 替代 notify 功能
 def send(title, message):
     print(f"{title}: {message}")
+# 推送 功能
+def push_dt(dingtalk, msg):
+    try:
+        webhook = 'https://oapi.dingtalk.com/robot/send?access_token='+dingtalk
 
+        dingTalk = DingtalkChatbot(webhook,fail_notice=True)
+        # Markdown消息@所有人
+        dingTalk.send_markdown(title="ZUOBIAO", text=msg,
+            is_at_all=True)
+    except Exception as e:
+        error_traceback = traceback.format_exc()
+        print(error_traceback)
 # 获取环境变量 
 def get_env(): 
     #判断 COOKIE_ZUOBIAO否存在于环境变量 
@@ -146,17 +157,7 @@ class ZuoBiao:
             else:
                 send('❌代办任务失败', f'任务名称：{todoRecord["title"]}')
             time.sleep(60) # 休眠20秒
-    def push_dt(self, msg):
-        try:
-            webhook = 'https://oapi.dingtalk.com/robot/send?access_token='+f"{self.param.get('dingtalk')}"
 
-            dingTalk = DingtalkChatbot(webhook,fail_notice=True)
-            # Markdown消息@所有人
-            dingTalk.send_markdown(title="ZUOBIAO", text=msg,
-                is_at_all=True)
-        except Exception as e:
-            error_traceback = traceback.format_exc()
-            print(error_traceback)
     def do_login(self):
         """通过登录来刷新会话cookie"""
         print(f"正在为账号 [{self.param.get('account')}] 尝试登录并刷新Cookie...")
@@ -204,23 +205,19 @@ def main():
 
     i = 0
     for i in range(len(datas.get("ZUOBIAO", []))):
-        #print(i)
         _check_item = datas.get("ZUOBIAO", [])[i]
-        #print(_check_item)
          # 开始任务
-        log = f"完成🙍🏻‍♂️ 第{i + 1}个账号"+_check_item['account']
-        msg += log
-        # 登录
-        zuobaio = ZuoBiao(_check_item)
-        log = zuobaio.do_login()
-        zuobaio.push_dt(log)
+         # 登录
+        log = f"完成🙍🏻‍♂️ 第{i + 1}个"+ZuoBiao(_check_item).do_login()
+        
+        push_dt(_check_item['dingtalk'],log)
         msg += log + "\n"
+        
         i += 1
     try:
         send('开始', msg)
     except Exception as err:
         print('%s\n❌ 错误，请查看运行日志！' % err)
-
     return msg[:-1]
 
 
