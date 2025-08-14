@@ -10,7 +10,7 @@ jobs:
   check_num_if_run:
     runs-on: ubuntu-latest
     outputs:
-      skip: ${{ steps.num.check.outputs.skip }}
+      num_skip: ${{ steps.num.check.outputs.num_skip }}
 
     steps:
       - name: 检出代码
