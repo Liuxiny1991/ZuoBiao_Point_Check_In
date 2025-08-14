@@ -11,6 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       skip: ${{ steps.num.check.outputs.skip }}
+
     steps:
       - name: 检出代码
         uses: actions/checkout@v3
@@ -33,17 +34,18 @@ jobs:
             echo "上次运行日期: $last_date"
             if [ "$last_date" = "$current_date" ]; then
               echo "今天已成功运行，跳过执行。"
-              echo "skip=false" >> "$GITHUB_OUTPUT"
+              echo "num_skip=false" >> "$GITHUB_OUTPUT"
+
               exit 0
             fi
           fi
 
           echo "今天尚未运行，继续执行。"
-          echo "skip=true" >> "$GITHUB_OUTPUT"
+          echo "num_skip=true" >> "$GITHUB_OUTPUT"
 
-  setup:
+  started_num_plus_plus:
     needs: check_num_if_run
-    if: needs.check_num_if_run.outputs.skip == 'true'
+    if: needs.check_num_if_run.outputs.num_skip == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: 检出代码

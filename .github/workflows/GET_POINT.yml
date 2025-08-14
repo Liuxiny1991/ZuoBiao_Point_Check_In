@@ -41,7 +41,8 @@ jobs:
           echo "今天尚未运行，继续执行。"
           echo "skip=true" >> "$GITHUB_OUTPUT"
 
-  setup:
+  started_job:
+
     needs: check_if_run
     if: needs.check_if_run.outputs.skip == 'true'
     runs-on: ubuntu-latest
