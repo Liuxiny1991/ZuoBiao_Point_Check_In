@@ -5,6 +5,7 @@ on:
     workflows: ["ZUOBIAO"]
     types:
       - completed
+  workflow_dispatch:      # 允许手动触发
 jobs:
   repo-sync:
     runs-on: ubuntu-latest
