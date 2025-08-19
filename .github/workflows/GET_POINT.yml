@@ -70,7 +70,7 @@ jobs:
       - name: 执行签到脚本
         env:
           ZUOBIAO: ${{ secrets.CONFIG }}
-          PageNum: 5
+          PageNum: 6
         run: python -u Points.py
 
       - name: 标记今天签到成功
@@ -92,10 +92,10 @@ jobs:
         run: |
           git config --local user.email "${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com"
           git config --local user.name "${{ github.actor }}"
-          git remote set-url origin https://${{ github.actor }}:${{ secrets.PAT }}@github.com/${{ github.repository }}
+          git remote set-url origin https://${{ github.actor }}:${{ github.token }}@github.com/${{ github.repository }}
           git pull --rebase --autostash
           git commit --allow-empty -m "CHORE: 保持运行.."
-          git push origin HEAD:master
+          git push
 
       - name: 清理旧的工作流记录
         uses: Mattraks/delete-workflow-runs@main
