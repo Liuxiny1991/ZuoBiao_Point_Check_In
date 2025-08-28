@@ -110,7 +110,7 @@ class ZuoBiao:
                 send('✅记录成功', f'文章标题：{document["title"]}')
             else:
                 send('❌记录失败', f'文章标题：{document["title"]}')
-            time.sleep(60) # 休眠30秒
+            time.sleep(30) # 休眠30秒
 
     def get_document_id(self):
         '''
@@ -156,7 +156,7 @@ class ZuoBiao:
                 send('✅代办任务成功', f'任务名称：{todoRecord["title"]}')
             else:
                 send('❌代办任务失败', f'任务名称：{todoRecord["title"]}')
-            time.sleep(60) # 休眠20秒
+            time.sleep(20) # 休眠20秒
 
     def do_login(self):
         """通过登录来刷新会话cookie"""
