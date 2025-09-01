@@ -25,4 +25,4 @@ jobs:
           git config user.email github-actions@github.com
           git add .github/workflows/GET_POINT.yml
           git commit -m "累加PageNum为$new"
-          git push origin HEAD:master
+          git push origin HEAD:main
