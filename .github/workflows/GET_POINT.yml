@@ -70,7 +70,7 @@ jobs:
       - name: 执行签到脚本
         env:
           ZUOBIAO: ${{ secrets.CONFIG }}
-          PageNum: 51
+          PageNum: 52
         run: python -u Points.py
 
       - name: 标记今天签到成功
