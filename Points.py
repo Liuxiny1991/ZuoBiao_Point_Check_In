@@ -119,7 +119,7 @@ class ZuoBiao:
         '''
         param = {
             "pageNum": self.pageNum,
-            "pageSize": 50,
+            "pageSize": 25,
             "orderBy": 'asc',
             "secondarySort": 'createdTime',
         }
